@@ -1,7 +1,9 @@
 # Importing the Libraries
 from pandas import read_csv
+import numpy as np
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import r2_score, root_mean_squared_error
 import pickle
 
 # Importing weight_height dataset
@@ -20,6 +22,18 @@ regressor = LinearRegression()
 
 # Fitting training set to the data
 regressor.fit(h_train, w_train)
+
+data['y_pred']=regressor.predict(height)
+
+#Checking Accuracy
+
+RMSE = root_mean_squared_error(weight,data['y_pred'])
+print('RMSE value is ',np.round(RMSE,2))
+
+RSquare = r2_score(weight,data['y_pred'])
+print('R square value is ',np.round(RSquare,2))
+
+
 
 # Saving the model to the pickle file
 pickle.dump(regressor, open('regressor_model.pkl', 'wb'))
